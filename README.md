@@ -20,8 +20,8 @@ A clean, well-structured Python client for interacting with [OpenRouter](https:/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/openrouter-client.git
-   cd openrouter-client
+   git clone https://github.com/qodam/call-open-router.git
+   cd call-open-router
    ```
 
 2. **Install dependencies**
@@ -151,14 +151,6 @@ client = OpenRouterClient(
 
 - [OpenRouter](https://openrouter.ai/) for providing the API
 - Built with Python and ❤️
-
-## Support
-
-If you encounter any issues or have questions:
-
-- 📫 Open an issue on GitHub
-- 📖 Check the [OpenRouter documentation](https://openrouter.ai/docs)
-- 💬 Visit the [OpenRouter Discord](https://discord.gg/openrouter)
 
 ## Roadmap
 
