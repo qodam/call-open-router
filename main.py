@@ -34,24 +34,37 @@ class OpenRouterClient:
         return {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json",
-            "HTTP-Referer": "https://codinghubstudio.vercel.app",
+            "HTTP-Referer": "https://qodam.com",
             "X-Title": "Post Generator"
         }
     
-    def _build_payload(self, prompt: str, **kwargs) -> Dict[str, Any]:
+    def _build_payload(self, prompt: str, url: Optional[str] = None, **kwargs) -> Dict[str, Any]:
+        content_list = [{"type": "text", "text": prompt}]
+        
+        if url:
+            content_list.append({
+                "type": "image_url",
+                "image_url": {"url": url}
+            })
+        
         return {
             "model": kwargs.get("model", self.model_name),
-            "messages": [{"role": "user", "content": prompt}],
+            "messages": [
+                {
+                    "role": "user",
+                    "content": content_list
+                }
+            ],
             "max_tokens": kwargs.get("max_tokens", self.max_tokens),
             "temperature": kwargs.get("temperature", self.temperature)
         }
     
-    def generate(self, prompt: str, verbose: bool = True, **kwargs) -> str:
+    def generate(self, prompt: str, url: Optional[str] = None, verbose: bool = True, **kwargs) -> str:
         if not prompt.strip():
             raise ValueError("Prompt cannot be empty")
         
         headers = self._build_headers()
-        payload = self._build_payload(prompt, **kwargs)
+        payload = self._build_payload(prompt, url, **kwargs)
         
         try:
             response = requests.post(
@@ -93,14 +106,14 @@ def main():
         print(f"Configuration error: {e}", file=sys.stderr)
         sys.exit(1)
     
-    prompt = """ Write a short, engaging social media post about the benefits of    
-                 learning to code in 2025. Keep it under 280 characters.
-             """
+    prompt = """décris l'image"""
+    
+    image_url = "https://images.pexels.com/photos/1821699/pexels-photo-1821699.jpeg?_gl=1*1boopmf*_ga*MTI5NDgyNjA1LjE3NTA4NjQzNjY.*_ga_8JE65Q40S6*czE3NjM2NDY0MDckbzI1JGcxJHQxNzYzNjQ2NDEzJGo1NCRsMCRoMA.."  # Mettre l'URL ici si tu veux inclure une image
     
     try:
-        response = client.generate(prompt)
+        response = client.generate(prompt, url=image_url)
         
-        # Optional: Save to file
+        # Optionnel: sauvegarder dans un fichier
         # timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         # with open(f"output_{timestamp}.txt", "w", encoding="utf-8") as f:
         #     f.write(response)
