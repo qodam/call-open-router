@@ -106,9 +106,10 @@ def main():
         print(f"Configuration error: {e}", file=sys.stderr)
         sys.exit(1)
     
-    prompt = """décris l'image"""
+    prompt = """Write a short, engaging social media post about the benefits of    
+                learning to code in 2025. Keep it under 280 characters."""
     
-    image_url = "https://images.pexels.com/photos/1821699/pexels-photo-1821699.jpeg?_gl=1*1boopmf*_ga*MTI5NDgyNjA1LjE3NTA4NjQzNjY.*_ga_8JE65Q40S6*czE3NjM2NDY0MDckbzI1JGcxJHQxNzYzNjQ2NDEzJGo1NCRsMCRoMA.."  # Mettre l'URL ici si tu veux inclure une image
+    image_url = None  # Mettre l'URL ici si tu veux inclure une image
     
     try:
         response = client.generate(prompt, url=image_url)
