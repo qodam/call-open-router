@@ -10,6 +10,7 @@ A clean, well-structured Python client for interacting with [OpenRouter](https:/
 - 🎯 Type hints for better IDE support
 - ⚡ Timeout protection
 - 🛡️ Comprehensive error handling
+- 🖼️ Image input support (vision models)
 
 ## Requirements
 
@@ -19,32 +20,31 @@ A clean, well-structured Python client for interacting with [OpenRouter](https:/
 ## Installation
 
 1. **Clone the repository**
-   ```bash
+```bash
    git clone https://github.com/qodam/call-open-router.git
    cd call-open-router
-   ```
+```
 
 2. **Install dependencies**
-   ```bash
+```bash
    pip install -r requirements.txt
-   ```
+```
 
 3. **Configure your API key**
-   ```bash
+```bash
    cp config.example.py config.py
-   ```
+```
    
    Edit `config.py` and add your OpenRouter API key:
-   ```python
+```python
    API_KEY_OPENROUTER = "sk-or-v1-..."
-   ```
-
+```
+   
    Get your API key from: https://openrouter.ai/keys
 
 ## Usage
 
 ### Basic Usage
-
 ```python
 from main import OpenRouterClient
 
@@ -60,13 +60,11 @@ print(response)
 ```
 
 ### Run the Example
-
 ```bash
 python main.py
 ```
 
 ### Advanced Usage
-
 ```python
 # Customize parameters per request
 response = client.generate(
@@ -75,6 +73,13 @@ response = client.generate(
     max_tokens=1500,
     temperature=0.5,
     verbose=False  # Disable console output
+)
+
+# Use with image input (vision models)
+response = client.generate(
+    prompt="Describe this image in detail",
+    url="https://example.com/image.jpg",
+    model="qwen/qwen-vl-plus"
 )
 ```
 
@@ -89,6 +94,15 @@ The `OpenRouterClient` accepts the following parameters:
 | `max_tokens` | int | `2000` | Maximum response length |
 | `temperature` | float | `0.8` | Sampling temperature (0-2) |
 
+### generate() Method Parameters
+
+| Parameter | Type | Default | Description |
+|-----------|------|---------|-------------|
+| `prompt` | str | Required | Your text prompt |
+| `url` | str | None | Optional image URL for vision models |
+| `verbose` | bool | True | Print formatted output to console |
+| `**kwargs` | dict | - | Override model, max_tokens, temperature |
+
 ## Available Models
 
 OpenRouter supports many models. Popular choices include:
@@ -102,7 +116,6 @@ OpenRouter supports many models. Popular choices include:
 See the full list at: https://openrouter.ai/models
 
 ## Project Structure
-
 ```
 openrouter-client/
 │
@@ -117,7 +130,6 @@ openrouter-client/
 ## Error Handling
 
 The client includes comprehensive error handling:
-
 ```python
 try:
     response = client.generate("Your prompt")
@@ -138,7 +150,6 @@ except Exception as e:
 ### Using Environment Variables
 
 For production environments:
-
 ```python
 import os
 
@@ -147,19 +158,35 @@ client = OpenRouterClient(
 )
 ```
 
-## Acknowledgments
+## Example Output
+```
+============================================================
+Model: qwen/qwen-vl-plus
+Timestamp: 2025-11-20 14:30:45
+============================================================
 
-- [OpenRouter](https://openrouter.ai/) for providing the API
-- Built with Python and ❤️
+🚀 2025 is the perfect time to learn coding! Whether you're 
+building AI apps, automating tasks, or launching a startup, 
+coding unlocks endless possibilities. Start your journey today! 
+💻✨ #LearnToCode #TechSkills
+
+============================================================
+```
 
 ## Roadmap
 
+- [x] Add image input support
 - [ ] Add async support
 - [ ] Implement streaming responses
 - [ ] Add conversation history management
 - [ ] Create CLI interface
 - [ ] Add unit tests
-- [ ] Support for image inputs
+- [ ] Support for multiple images
+
+## Acknowledgments
+
+- [OpenRouter](https://openrouter.ai/) for providing the API
+- Built with Python and ❤️
 
 ---
 
